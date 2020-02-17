@@ -6,6 +6,8 @@ This file creates your application.
 """
 
 from app import app
+from app import mail
+from app.forms import ContactForm
 from flask import render_template, request, redirect, url_for, flash
 
 
@@ -24,6 +26,41 @@ def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
 
+
+@app.route('/contact/')
+def contact():
+    """Render the website's contact page."""
+    form = ContactForm()
+    return render_template('contact.html', form=form)
+
+
+@app.route('/submit', methods=('GET', 'POST'))
+def submit():
+    form = ContactForm()
+    if form.validate_on_submit():
+        return redirect('/success')
+    return render_template('submit.html', form=form)
+
+
+@app.route("/", methods=['POST', 'GET'])
+def index():
+    msg = Message(request.form['Subject'].data, sender=(request.form['Name'].data, request.form['Email'].data), recipient=["sabreen_hasan@yahoo.com"]) 
+    msg.body = request.form['Message'].data 
+    mail.send(msg)
+    return render_template('index.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != '6d3de8d95bd0da' or \
+                request.form['password'] != 'cfe4bb177bb24a':
+            error = 'Invalid login!'
+        else:
+            flash('Your email was successfully sent')
+            return redirect(url_for('home.html'))
+    return render_template('login.html', error=error)
 
 ###
 # The functions below should be applicable to all Flask apps.

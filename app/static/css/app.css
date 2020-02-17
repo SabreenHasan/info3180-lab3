@@ -1,3 +1,25 @@
 body {
     padding-top: 5rem;
+    padding-bottom: 5rem;
+    padding-left: 10rem;
+    padding-right: 10rem;
+}
+
+div {
+    max-width: 50px;
+    max-height: 20px;
+}
+
+h1 {
+    font-weight: bold;
+    
+}
+
+h5 {
+    font-weight: bold;
+}
+
+#flashes {
+    font-weight: bold;
+    font-size: 20px;
 }
