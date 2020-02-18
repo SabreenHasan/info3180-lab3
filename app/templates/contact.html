@@ -1,44 +1,45 @@
 {% extends "base.html" %}
 
 {% block main %} 
-<h1>Contact Form</h1><hr>
+<div class="container">
+    <h1>Contact Form</h1><hr>
 
-<p class="lead">Fill in this form to contact the site owners.</p><br>
+    <p class="lead">Fill in this form to contact the site owners.</p><br>
 
-<form method="POST" action="">
-    <div>
-        <p>
-            <h5>{{ form.name.label }}</h5><br>
+    <form method="POST" action="{{ url_for('contact') }}">
+        <h5>{{ form.name.label }}</h5><p id="flashes">(Required)</p>
             Please enter your full name.<br>
-            {{ form.name(size=20) }} 
-        </p>        
-    </div>
-    <div>
-        <p>
-            <h5>{{ form.email.label }}</h5><br>
-            Please enter your email address.<br>
-            {{ form.email(size=50) }}
-        </p>
-    </div>
-    <div>
-        <p>
-            <h5>{{ form.subject.label }}</h5><br>
-            Please enter the subject for your message.<br>
-            {{ form.subject(size=30) }
-        }</p>        
-    </div>
-    <div>
-        <p>
-            <h5>{{ form.message.label }}</h5><br>
-            Please enter the message you would like to send.<br>
-            {{ form.message(size=250) }}
-            {{ csrf_token }}
-        </p>        
-    </div>
-    <div>
-        <button>
-            {{ form.submit() }}
-        </button>
-    </div>    
-</form>
+            {{ form.name(size=20) }} <br><br>
+        <ul>
+            {% for error in form.name.errors %}
+                <li> {{ error }}</li>
+            {% endfor %}
+        </ul>
+        <h5>{{ form.email.label }}</h5><p id="flashes">(Required)</p>
+            Please enter your full name.<br>
+            {{ form.email(size=20) }} <br><br>
+        <ul>
+            {% for error in form.email.errors %}
+                <li> {{ error }}</li>
+            {% endfor %}
+        </ul>
+        <h5>{{ form.subject.label }}</h5><p id="flashes">(Required)</p>
+            Please enter your full name.<br>
+            {{ form.subject(size=30) }} <br><br>
+        <ul>
+            {% for error in form.subject.errors %}
+                <li> {{ error }}</li>
+            {% endfor %}
+        </ul>
+        <h5>{{ form.message.label }}</h5><p id="flashes">(Required)</p>
+            Please enter your full name.<br>
+            {{ form.message(size=50) }} <br><br>
+        <ul>
+            {% for error in form.message.errors %}
+                <li> {{ error }}</li>
+            {% endfor %}
+        </ul>
+        <button type="submit">Send</button>  
+    </form>
+</div>
 {% endblock %}
